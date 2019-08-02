@@ -100,7 +100,20 @@ function calculateIndividualBonus (employeeObject) {
 
   revisedEmployees.push(newEmployeeObject);
   // console.log(revisedEmployees)
-  
+  displayEmployeeBonusOuput();
+}
+
+function addCommas(nStr)
+{
+	nStr += '';
+	x = nStr.split('.');
+	x1 = x[0];
+	x2 = x.length > 1 ? '.' + x[1] : '';
+	var rgx = /(\d+)(\d{3})/;
+	while (rgx.test(x1)) {
+		x1 = x1.replace(rgx, '$1' + ',' + '$2');
+	}
+	return x1 + x2;
 }
 
 $(document).ready(readyNow);
@@ -109,14 +122,15 @@ function displayEmployeeBonusOuput(){
   let employeeBonuses = $('#employeeBonusOutput');
   employeeBonuses.empty();
   for (i=0; i<revisedEmployees.length; i++){
-    employeeBonuses.append('<li>' + revisedEmployees[i].name+'</li>', '<li>' + revisedEmployees[i].bonusPercentage+'</li>'
-    , '<li>' + revisedEmployees[i].totalBonus+'</li>', '<li>' + revisedEmployees[i].totalCompensation+'</li>')
+    employeeBonuses.append('<li>' + revisedEmployees[i].name+'</li>'
+    , '<li>' + ((revisedEmployees[i].bonusPercentage).toFixed(2))*100+'%'+'</li>'
+    , '<li>' + '$'+addCommas(revisedEmployees[i].totalBonus)+'</li>'
+    , '<li>' + '$'+addCommas(revisedEmployees[i].totalCompensation)+'</li>')
   }
 }
  
 function readyNow(){
   $('#calculateBonusButton').on('click', calculateAllEmployeeBonuses);
-  displayEmployeeBonusOuput();
 }
 
 // HELPER FUNCTIONS
